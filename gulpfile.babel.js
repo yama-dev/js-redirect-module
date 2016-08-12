@@ -204,6 +204,15 @@ gulp.task('clean', () => {
       console.log('Deleted files and folders:\n', paths.join('\n'));
     });
 });
+gulp.task('deploy-renaem', function() {
+  gulp.src(CONFIG.deployRenameFile.js)
+    .pipe(uglify())
+    .pipe(rename({
+      extname: '.min.js'
+    }))
+  .pipe(gulp.dest(CONFIG.jsDirectory.js))
+    ;
+});
 gulp.task('release', (callback) => {
   return runSequence(['sass','babel'],'js','jadehtml','deploy','clean',callback);
 });
