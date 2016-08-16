@@ -1,6 +1,6 @@
 {
   "name": "web-template",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Web site production for the template",
   "keywords": "web gulp babel",
   "author": "yama-dev",

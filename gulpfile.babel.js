@@ -37,6 +37,10 @@ const CONFIG = {
     '!./src/**/*.jade',
     '!./src/**/*.es6'
   ],
+  deployRenameFile: {
+    js : './release/assets/js/*.js',
+    jsDirectory : './dist/',
+  },
   cleanFile: [
     './release/**/libs',
   ]
@@ -70,6 +74,7 @@ import jade from 'gulp-jade';
 import gulpIf from 'gulp-if';
 import browserSync from 'browser-sync';
 import minimist from 'minimist';
+import rename from 'gulp-rename';
 const RELOAD = browserSync.reload;
 
 /**
@@ -204,14 +209,16 @@ gulp.task('clean', () => {
       console.log('Deleted files and folders:\n', paths.join('\n'));
     });
 });
-gulp.task('deploy-renaem', function() {
+gulp.task('deploy-rename', function() {
   gulp.src(CONFIG.deployRenameFile.js)
-    .pipe(uglify())
+    .pipe(gulpIf( flg_min, uglify({preserveComments: 'some'}) ) )
     .pipe(rename({
       extname: '.min.js'
     }))
-  .pipe(gulp.dest(CONFIG.jsDirectory.js))
-    ;
+    .pipe(gulp.dest(CONFIG.deployRenameFile.jsDirectory));
+  del(CONFIG.outputDirectory.release).then(paths => {
+      console.log('Deleted files and folders:\n', paths.join('\n'));
+    });
 });
 gulp.task('release', (callback) => {
   return runSequence(['sass','babel'],'js','jadehtml','deploy','clean',callback);
