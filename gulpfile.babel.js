@@ -26,6 +26,7 @@ const CONFIG = {
   watchDirectory: {
     html : './src/**/*.html',
     jade : './src/**/*.jade',
+    es6 : './src/**/*.es6',
     css : './src/**/*.css',
     php : './src/**/*.php',
     sass : './src/**/*.scss',
